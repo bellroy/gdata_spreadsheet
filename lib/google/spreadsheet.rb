@@ -1,4 +1,4 @@
-require 'config'
+require 'google/config'
 
 module Google
   WORKSHEET_BASE_URL = "https://spreadsheets.google.com/feeds/worksheets"

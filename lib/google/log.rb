@@ -1,5 +1,3 @@
-require 'base'
-
 module Google
   class Log < Base
 
