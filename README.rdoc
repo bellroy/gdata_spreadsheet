@@ -1,6 +1,6 @@
-= gdata_spreadsheet
+= GData Spreadsheet
 
-Description goes here.
+
 
 == Note on Patches/Pull Requests
  
@@ -14,4 +14,4 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2010 Tom. See LICENSE for details.
+Copyright (c) 2010 Trike Apps. See LICENSE for details.

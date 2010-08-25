@@ -5,12 +5,12 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "gdata_spreadsheet"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Simple wrapper to access a google spreadsheet using the GData gem}
+    gem.description = %Q{}
     gem.email = "tom@trike.com.au"
-    gem.homepage = "http://github.com/tsommer/gdata_spreadsheet"
+    gem.homepage = "http://github.com/tricycle/gdata_spreadsheet"
     gem.authors = ["Tom"]
-    gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+    # gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
