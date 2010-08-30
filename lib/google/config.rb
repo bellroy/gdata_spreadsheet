@@ -1,9 +1,14 @@
+require 'yaml'
+
 module Google
   class Config
-    CONFIG = YAML.load_file(File.join(Rails.root, "config", "google.yml"))
+    def self.file=(path)
+      @@file = path
+    end
 
     def self.setting(name)
-      CONFIG[name]
+      @@yaml ||= YAML.load_file(@@file)
+      @@yaml[name]
     end
   end
 end
