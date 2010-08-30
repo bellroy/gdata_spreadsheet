@@ -5,11 +5,14 @@ module Google
       super doc_id
 
       @message = message
-      new_row
     end
 
     def worksheet_name
       "sync log"
+    end
+
+    def id_column
+      nil
     end
 
     def sync_attributes

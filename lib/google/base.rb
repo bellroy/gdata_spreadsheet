@@ -2,11 +2,21 @@ module Google
   class Base
     attr_reader :doc
 
-    def initialize(doc_id)
+    def initialize(doc_id, row_id = nil)
       raise Google::MissingDocumentError unless doc_id
 
       @sheet = Spreadsheet.new(doc_id)
       @worksheet_id = @sheet.worksheet_id_for(worksheet_name)
+
+      initialize_row row_id
+    end
+
+    def initialize_row(id)
+      if id_column && id && @doc = @sheet.row_data(id_column, id.downcase, @worksheet_id)
+        initialize_doc
+      else
+        new_row
+      end
     end
 
     def new_row
@@ -16,6 +26,7 @@ module Google
     end
 
     def initialize_doc
+      @doc["xmlns"] = "http://www.w3.org/2005/Atom"
       @doc["xmlns:gsx"] = "http://schemas.google.com/spreadsheets/2006/extended"
       @doc["xmlns:gd"] = "http://schemas.google.com/g/2005"
     end
@@ -34,6 +45,11 @@ module Google
 
     def worksheet_name
       raise "Abstract! Overwrite this method in your subclass"
+    end
+
+    def id_column
+      raise "Abstract! Overwrite this method in your subclass"
+      # return nil in your subclass, if you want a push only model
     end
 
     def sync_attributes
