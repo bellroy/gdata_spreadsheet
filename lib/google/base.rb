@@ -54,7 +54,7 @@ module Google
     def method_missing(method, *args, &block)
       method = method.to_s
 
-      if method.ends_with?("=") && args.size == 1
+      if method[-1, 1] == "=" && args.size == 1
         set method[0..-2], *args
       elsif args.empty?
         get method
@@ -70,7 +70,7 @@ module Google
     end
 
     def get(field)
-      attribute(field).try :text
+      attribute(field) && attribute(field).text
     end
 
     def set(field, value)
