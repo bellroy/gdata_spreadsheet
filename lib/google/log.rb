@@ -1,4 +1,13 @@
 module Google
+
+  # Example spreadsheet model.
+  #
+  # This enables very basic message pushing to a spreadsheet named 'sync log'
+  #
+  # === Usage
+  #
+  #   entry = Google::Log.new("spreadsheet_id", "awesome stuff!")
+  #   entry.sync!
   class Log < Base
 
     def initialize(doc_id, message)
@@ -6,6 +15,8 @@ module Google
 
       @message = message
     end
+
+  private
 
     def worksheet_name
       "sync log"

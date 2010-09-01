@@ -1,9 +1,101 @@
 = GData Spreadsheet
 
+Use the GData API the way its meant to be: OO-style!
+
+
+== Installation
+
+  gem install gdata_spreadsheet
+
+
+== Setup
+
+You have to initialise the connection by setting up the config:
+
+  Google::Config.file = File.join(File.dirname(__FILE__), "google.yml")
+
+The config file itself looks like this:
+
+  account:          account@google.com
+  worksheet_token:  session_token_for_worksheets
+  list_token:       session_token_for_lists
+
+Don't know how to get session tokens? Check this out: http://blog.tricycledevelopments.com/2010/08/19/gdata-authsub.html
+
+
+== Usage
+
+Just create a subclass of the <tt>Google::Base</tt> class and overwrite <tt>worksheet_name, id_column and sync_attributes</tt>.
+A very simple example is the <tt>Log</tt> class, which can be used to write messages to a spreadsheet.
+A more advanced example would be this:
+
+  module Google
+    class Order < Google::Base
+      attr_reader :line_items
+
+      def initialize(doc_id, id = nil, items = [])
+        super doc_id, id
+
+        @line_items = items
+      end
+
+      def id_column
+        "ordernumber"
+      end
+
+      def worksheet_name
+        "orders"
+      end
+
+      def sync_attributes
+        {
+          :timestamp        => Time.now.strftime("%d/%m/%Y %H:%M"),
+          :ordernumber      => 123,
+          ...
+          :lineitems        => line_items,
+          ...
+        }
+      end
+    end
+  end
+
+
+== Finding / updating existing records
+
+The second parameter for the <tt>Base</tt> initialiser takes an ID. If an ID value is provided (and the <tt>id_column</tt> is specified),
+then the matching row will be fetched from the spreadsheet while mapping all existing attributes (see 'How do attributes map?' for more information).
+
+  order = Google::Order.new("spreadsheet_id", "1234")
+
+The record can then be written to the spreadsheet by calling <tt>save</tt>. If <tt>sync!</tt> is executed,
+the attributes will be updated according to the mapping specified in <tt>sync_attributes</tt>.
+
+  order.save
+
+
+== Creating new records
+
+Just instantiate your model without an ID. <tt>sync!</tt> will take care of pushing the data to the spreadsheet.
+
+  order = Google::Order.new("spreadsheet_id")
+  order.sync!
+
+
+== How do attributes map?
+
+All attributes can then be accessed using the regular getters and setters:
+
+  order = Google::Order.new("spreadsheet_id")
+  order.ordernumber = "4321"
+  order.ordernumber             # => "4321"
+
+Google uses a shortened version of the column headers and strips all characters except for <tt>[a-z0-9]</tt>.
+So when your column header in the spreadsheet reads 'Order Number', the mapped attribute in your code will be 'ordernumber'.
+Make sure to call the correct methods!
 
 
 == Note on Patches/Pull Requests
- 
+
 * Fork the project.
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so I don't break it in a

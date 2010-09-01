@@ -10,6 +10,9 @@ module Google
   class FatalError < ::Exception
   end
 
+  # Interface to the GData API.
+  #
+  # You shouldn't have to use this class in your code, except when debugging!
   class Spreadsheet
 
     def initialize(key)
