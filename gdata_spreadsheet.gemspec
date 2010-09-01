@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{gdata_spreadsheet}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tom"]
-  s.date = %q{2010-08-30}
+  s.date = %q{2010-09-01}
   s.description = %q{}
   s.email = %q{tom@trike.com.au}
   s.extra_rdoc_files = [
